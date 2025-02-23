@@ -1,0 +1,5 @@
+# This directory is a Syncthing folder marker.
+# Do not delete.
+
+folderID: cgpkp-ououk
+created: 2025-02-23T19:01:13+08:00
