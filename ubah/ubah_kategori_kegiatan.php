@@ -23,19 +23,31 @@ if(@$_GET['Id_Kegiatan']){
 
 
     <form action="" method="post">
-        <label>Kategori:</label>
-        <input type="text" name="kategori" readonly value="<?=$data_update['Kategori']?>" required><br>
-
-        <label>Sub Kategori:</label>
-        <input type="text" name="sub_kategori" readonly value="<?=$data_update['Sub_Kategori']?>" required><br>
-
-        <label>Nama Kegiatan:</label>
-        <input type="text" name="kegiatan" value="<?=$data_update['Jenis_Kegiatan']?>" autofocus required><br>
-
-        <label>Angka Kredit / Point:</label>
-        <input type="number" name="point" value="<?=$data_update['Angka_Kredit']?>" required><br>
-
-        <input type="submit" name="tombol_update" value="Update">
+        <table>
+            <tr>
+                <td><label>Kategori:</label></td>
+                <td><input type="text" name="kategori" readonly value="<?= $data_update['Kategori'] ?>" required></td>
+            </tr>
+            <tr>
+                <td><label>Sub Kategori:</label></td>
+                <td><input type="text" name="sub_kategori" readonly value="<?= $data_update['Sub_Kategori'] ?>"
+                        required></td>
+            </tr>
+            <tr>
+                <td><label>Nama Kegiatan:</label></td>
+                <td><input type="text" name="kegiatan" value="<?= $data_update['Jenis_Kegiatan'] ?>" autofocus required>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Angka Kredit / Point:</label></td>
+                <td><input type="number" name="point" value="<?= $data_update['Angka_Kredit'] ?>" required></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="right">
+                    <input type="submit" name="tombol_update" value="Update">
+                </td>
+            </tr>
+        </table>
     </form>
 
     <?php
@@ -57,13 +69,22 @@ if(@$_GET['Id_Kegiatan']){
 ?>
 
     <form action="" method="post">
-        <label>Kategori:</label>
-        <input type="text" name="kategori" readonly value="<?=$data_update['Kategori']?>" required><br>
-
-        <label>Sub Kategori:</label>
-        <input type="text" name="sub_kategori" autofocus value="<?=$data_update['Sub_Kategori']?>" required><br>
-
-        <input type="submit" name="tombol_update" value="Update">
+        <table>
+            <tr>
+                <td><label>Kategori:</label></td>
+                <td><input type="text" name="kategori" readonly value="<?= $data_update['Kategori'] ?>" required></td>
+            </tr>
+            <tr>
+                <td><label>Sub Kategori:</label></td>
+                <td><input type="text" name="sub_kategori" autofocus value="<?= $data_update['Sub_Kategori'] ?>"
+                        required></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" name="tombol_update" value="Update">
+                </td>
+            </tr>
+        </table>
     </form>
 
     <?php

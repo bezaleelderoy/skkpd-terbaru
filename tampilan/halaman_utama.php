@@ -9,84 +9,80 @@ include "../koneksi.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Utama</title>
     <style>
+    .nav-menu,
+    .user-menu {
+        list-style: none;
+        display: flex
+    }
+
+    .nav-menu a,
+    .user-menu a {
+        text-decoration: none;
+        color: #fff;
+        transition: .3s
+    }
+
     * {
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
+        box-sizing: border-box
     }
 
     body {
-        font-family: Arial, sans-serif;
+        font-family: Arial, sans-serif
     }
 
     .navbar {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: #000000;
-        color: white;
+        background: #000;
+        color: #fff;
         padding: 15px 50px;
         position: sticky;
         top: 0;
         width: 100%;
-        z-index: 1000;
+        z-index: 1000
     }
 
     .navbar h2 {
         margin: 0;
-        font-size: 24px;
+        font-size: 24px
     }
 
     .nav-menu {
-        list-style: none;
-        display: flex;
-        gap: 20px;
+        gap: 20px
     }
 
-    .nav-menu li {
-        display: inline;
+    .nav-menu li,
+    .user-menu li {
+        display: inline
     }
 
     .nav-menu a {
-        text-decoration: none;
-        color: white;
         font-size: 18px;
         padding: 8px 12px;
-        transition: 0.3s;
-        border: 1px solid #ffffff;
+        border: 1px solid #fff
     }
 
-    .nav-menu a:hover {
+    .nav-menu a:hover,
+    .user-menu a:hover {
         background: #555;
-        border-radius: 5px;
+        border-radius: 5px
     }
 
     .user-menu {
-        list-style: none;
-        display: flex;
-        gap: 10px;
-    }
-
-    .user-menu li {
-        display: inline;
+        gap: 10px
     }
 
     .user-menu a {
-        text-decoration: none;
-        color: white;
         font-size: 16px;
         padding: 5px 10px;
-        transition: 0.3s;
-        border: 1px solid #ffffff;
-    }
-
-    .user-menu a:hover {
-        background: #555;
-        border-radius: 5px;
+        border: 1px solid #fff
     }
 
     .logout a {
-        color: red;
+        color: red
     }
     </style>
 </head>
@@ -104,6 +100,7 @@ include "../koneksi.php";
                 <li><a href="halaman_utama.php?page=siswa">Siswa</a></li>
                 <li><a href="halaman_utama.php?page=jurusan">Jurusan</a></li>
                 <li><a href="halaman_utama.php?page=kategori_kegiatan">Kategori</a></li>
+                <li><a href="halaman_utama.php?page=sertifikat">Sertifikat</a></li>
                 <?php
                 } elseif ($_COOKIE['level_user'] == 'siswa') {
                 ?>
