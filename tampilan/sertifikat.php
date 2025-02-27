@@ -38,7 +38,7 @@ function getSertifikat($koneksi, $status = '', $kegiatan = '') {
                     <td>{$data['Nama_Siswa']}</td>
                     <td>{$data['Angkatan']}</td>
                     <td>{$data['Status']}</td>
-                    <td><a href='../gambar/{$data['Sertifikat']}' target='_blank'>Lihat File</a></td>
+                    <td><a href='halaman_utama.php?page=cek_sertifikat&id={$data['Id_Sertifikat']}&file={$data['Sertifikat']}' target='_blank'>Lihat File</a></td>
                   </tr>";
         }
         echo "</table></center>";

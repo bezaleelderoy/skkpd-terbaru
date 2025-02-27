@@ -176,6 +176,9 @@ include "../koneksi.php";
         case "sertifikat":
             include "sertifikat.php";
             break;
+        case "cek_sertifikat":
+            include "cek_sertifikat.php";
+            break;
     }
     ?>
 
