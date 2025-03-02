@@ -104,7 +104,7 @@ include "../koneksi.php";
                 <?php
                 } elseif ($_COOKIE['level_user'] == 'siswa') {
                 ?>
-                <li><a href="halaman_utama.php?page=upload_sertifikat">Sertifikat</a></li>
+                <li><a href="halaman_utama.php?page=sertifikat_siswa">Sertifikat</a></li>
                 <?php
                 }
                 ?>
@@ -172,13 +172,19 @@ include "../koneksi.php";
             break;
         case "upload_sertifikat":
             include "../tambah/upload_sertifikat.php";
-            break;
+        break;
+        case "sertifikat_siswa":
+            include "sertifikat_siswa.php";
+        break;
         case "sertifikat":
             include "sertifikat.php";
-            break;
+        break;
         case "cek_sertifikat":
             include "cek_sertifikat.php";
-            break;
+        break;
+        case "cek_sertifikat_siswa":
+            include "cek_sertifikat_siswa.php";
+        break;
     }
     ?>
 

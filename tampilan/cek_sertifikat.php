@@ -1,24 +1,29 @@
 <?php
+if(!@$_COOKIE['level_user']) {
+    echo "<script>alert('belum login');window.location.href='../login.php'</script>";
+}elseif($_COOKIE['level_user']=='siswa') {
+    echo "<script>alert('anda siswa, silahkan kembali');window.location.href='halaman_utama.php?page=sertifikat_siswa'</script>";
+}
 // Mengambil parameter dari URL
-$pdfFile = isset($_GET['file']) ? $_GET['file'] : '';
-$id = isset($_GET['id']) ? $_GET['id'] : '';
-
-// Validasi input
-if (!$pdfFile) {
-    die("File PDF tidak ditemukan! Tambahkan parameter ?file=namafile.pdf di URL.");
+if(isset($_GET['file'])){
+    $pdfFile = $_GET['file'];
+}else{
+    $pdfFile = '';
+}
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
+}else{
+    $id = '';
 }
 
-// Ambil data siswa dan sertifikat
-$query = "SELECT Nama_Siswa, NIS, Jurusan, Kelas, No_Telp, Email, Angkatan, Kategori, Sub_Kategori, Jenis_Kegiatan, Status, Catatan 
-          FROM sertifikat 
-          INNER JOIN kegiatan USING(Id_Kegiatan) 
-          INNER JOIN kategori USING(Id_Kategori) 
-          INNER JOIN siswa USING(NIS) 
-          INNER JOIN jurusan USING(Id_Jurusan) 
-          WHERE Id_Sertifikat = '$id'";
+// Validasi input
+if (!$pdfFile){
+    echo "File PDF tidak ditemukan!";
+    exit;
+} 
 
-$result = mysqli_query($koneksi, $query);
-$data = mysqli_fetch_assoc($result);
+// Ambil data siswa dan sertifikat
+$data = mysqli_fetch_assoc(mysqli_query($koneksi,"SELECT Nama_Siswa, NIS, Jurusan, Kelas, No_Telp, Email, Angkatan, Kategori, Sub_Kategori, Jenis_Kegiatan, Status, Catatan FROM sertifikat INNER JOIN kegiatan USING(Id_Kegiatan) INNER JOIN kategori USING(Id_Kategori) INNER JOIN siswa USING(NIS) INNER JOIN jurusan USING(Id_Jurusan) WHERE Id_Sertifikat = '$id'"));
 
 $tgl = date("Y-m-d");
 
@@ -95,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tombol_submit'])) {
         <button id="btn-batal" type="button" style="display: none;" onclick="cancelInvalid()">Batal</button>
         <form action="" method="POST">
             <input type="hidden" name="status" value="Valid">
-            <button type="submit" id="btn-valid" style="float:right;">✅ Valid</button>
+            <button type="submit" id="btn-valid" style="float:right;" name="tombol_submit">✅ Valid</button>
         </form>
 
         <form action="" method="POST">

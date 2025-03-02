@@ -1,4 +1,9 @@
 <?php
+if(!@$_COOKIE['level_user']) {
+    echo "<script>alert('belum login');window.location.href='../login.php'</script>";
+}elseif($_COOKIE['level_user']=='siswa') {
+    echo "<script>alert('anda siswa, silahkan kembali');window.location.href='halaman_utama.php?page=sertifikat_siswa'</script>";
+}
 // Fungsi untuk mendapatkan data sertifikat berdasarkan status dan kegiatan
 function getSertifikat($koneksi, $status = '', $kegiatan = '') {
     $whereClause = "WHERE 1"; // Default kondisi WHERE
@@ -14,13 +19,14 @@ function getSertifikat($koneksi, $status = '', $kegiatan = '') {
               INNER JOIN kegiatan USING(Id_Kegiatan) 
               INNER JOIN kategori USING(Id_Kategori) 
               INNER JOIN siswa USING(NIS) 
-              $whereClause ORDER BY Sub_Kategori, Tanggal_Upload ASC";
+              $whereClause ORDER BY Status, Sub_Kategori, Tanggal_Upload ASC";
 
     $result = mysqli_query($koneksi, $query);
     
     if (mysqli_num_rows($result) > 0) {
         echo "<center><table border='1' cellpadding='5' cellspacing='0'>";
         echo "<tr>
+                <th>NIS</th>
                 <th>Kategori</th>
                 <th>Sub Kategori</th>
                 <th>Jenis Kegiatan</th>
@@ -32,6 +38,7 @@ function getSertifikat($koneksi, $status = '', $kegiatan = '') {
         
         while ($data = mysqli_fetch_assoc($result)) {
             echo "<tr>
+                    <td>{$data['NIS']}</td>
                     <td>{$data['Kategori']}</td>
                     <td>{$data['Sub_Kategori']}</td>
                     <td>{$data['Jenis_Kegiatan']}</td>

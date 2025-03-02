@@ -51,6 +51,14 @@ if(isset($_POST['tombol_login'])){
 </head>
 
 <body>
+    <center>
+        <h1>Level_User Operator : </h1>
+        <h4> username = yenny</h4>
+        <h4> password = admin12345</h4>
+        <h1> Level_User Siswa :<h1>
+                <h4> username = 7024</h4>
+                <h4> password = siswa7024</h4>
+    </center>
     <form action="" method="post">
         <table align="center" cellpadding="10">
             <tr>
