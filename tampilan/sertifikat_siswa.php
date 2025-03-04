@@ -4,6 +4,7 @@ if(!@$_COOKIE['level_user']) {
 }elseif($_COOKIE['level_user']=='operator') {
     echo "<script>alert('anda operator, silahkan kembali');window.location.href='halaman_utama.php?page=sertifikat'</script>";
 }
+$nis = $_COOKIE['nis'];
 // Fungsi untuk mendapatkan data sertifikat berdasarkan status dan kegiatan
 function getSertifikat($koneksi, $status = '', $kegiatan = '') {
     $whereClause = "WHERE 1"; // Default kondisi WHERE
@@ -54,6 +55,58 @@ function getSertifikat($koneksi, $status = '', $kegiatan = '') {
 }
 ?>
 <center>
+
+
+
+    <table border="1">
+        <tr>
+            <th>Keterangan</th>
+            <th>Jumlah</th>
+        </tr>
+        <tr>
+            <td>Point Terkumpul</td>
+            <td>
+                <?php
+            $total_point = mysqli_fetch_row(mysqli_query($koneksi, "SELECT SUM(Angka_Kredit) FROM sertifikat INNER JOIN kegiatan USING(Id_Kegiatan) WHERE Status='Valid' AND NIS='$nis'"))[0];
+            echo $total_point . "/30 Point";
+            
+            if ($total_point >= 30) {
+                echo "<br><a href='#'>Cetak Sertifikat SKKPd</a>";
+            }
+            ?>
+            </td>
+        </tr>
+        <tr>
+            <td>Menunggu Validasi</td>
+            <td>
+                <?php
+            $total_point = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM sertifikat WHERE Status='Menunggu Validasi' AND NIS='$nis'"))[0];
+            echo $total_point . " Sertifikat";
+            ?>
+            </td>
+        </tr>
+        <tr>
+            <td>Tidak Valid</td>
+            <td>
+                <?php
+            $total_point = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM sertifikat WHERE Status='Tidak Valid' AND NIS='$nis'"))[0];
+            echo $total_point . " Sertifikat";
+            ?>
+            </td>
+        </tr>
+        <tr>
+            <td>Valid</td>
+            <td>
+                <?php
+            $total_point = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM sertifikat WHERE Status='Valid' AND NIS='$nis'"))[0];
+            echo $total_point . " Sertifikat";
+            ?>
+            </td>
+        </tr>
+    </table><br><br>
+
+
+
     <button onclick="window.location.href='halaman_utama.php?page=upload_sertifikat';">+ Upload
         Sertifikat</button> <br><br>
     <form method="POST" action="">

