@@ -17,7 +17,7 @@ if(isset($_POST['tombol_login'])){
             setcookie('username', $data_operator['Username'], time() + (60 * 60 * 24 * 7), '/');
             setcookie('nama_lengkap', $nama_operator['Nama_Lengkap'], time() + (60 * 60 * 24 * 7), '/');
             setcookie('level_user', 'operator', time() + (60 * 60 * 24 * 7), '/');
-            echo "<script>alert('Berhasil Login');window.location.href='tampilan/halaman_utama.php?page=siswa'</script>";
+            echo "<script>alert('Berhasil Login');window.location.href='tampilan/halaman_utama.php'</script>";
         }else{
             echo "<script>alert('Gagal Login, Password Salah');window.location.href='login.php'</script>";
         }
@@ -29,7 +29,7 @@ if(isset($_POST['tombol_login'])){
             setcookie('nis', $data_siswa['NIS'], time() + (60 * 60 * 24 * 7), '/');
             setcookie('level_user', 'siswa', time() + (60 * 60 * 24 * 7), '/');
             setcookie('nama_lengkap', $nama_siswa['Nama_Siswa'], time() + (60 * 60 * 24 * 7), '/');
-            echo "<script>alert('Berhasil Login');window.location.href='tampilan/halaman_utama.php?page=upload_sertifikat'</script>";
+            echo "<script>alert('Berhasil Login');window.location.href='tampilan/halaman_utama.php?page=sertifikat_siswa'</script>";
         }
         else{
             echo "<script>alert('Gagal Login, Password Salah');window.location.href='login.php'</script>";

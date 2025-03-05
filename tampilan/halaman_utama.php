@@ -97,6 +97,7 @@ include "../koneksi.php";
                 <?php
                 if ($_COOKIE['level_user'] == 'operator') {
                 ?>
+                <li><a href="halaman_utama.php">Halaman Utama</a></li>
                 <li><a href="halaman_utama.php?page=siswa">Siswa</a></li>
                 <li><a href="halaman_utama.php?page=jurusan">Jurusan</a></li>
                 <li><a href="halaman_utama.php?page=kategori_kegiatan">Kategori</a></li>
@@ -133,7 +134,7 @@ include "../koneksi.php";
     <!-- Navbar -->
 
     <?php
-    switch ($_GET['page']) {
+    switch (@$_GET['page']) {
         case "siswa":
             include "siswa.php";
             break;
@@ -185,6 +186,58 @@ include "../koneksi.php";
         case "cek_sertifikat_siswa":
             include "cek_sertifikat_siswa.php";
         break;
+
+
+        default:
+    if($_COOKIE['level_user']=='operator'){
+?>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; justify-content: center;">
+        <div style="width: 200px; border: 1px solid #ccc; border-radius: 8px; padding: 10px; background: #f8f9fa;">
+            <div style="font-weight: bold; margin-bottom: 5px;">Siswa</div>
+            <div>
+                <?php
+                $siswa = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM siswa"))[0];
+                echo $siswa." Siswa";
+                ?>
+            </div>
+        </div>
+        <div style="width: 200px; border: 1px solid #ccc; border-radius: 8px; padding: 10px; background: #ffc107;">
+            <div style="font-weight: bold; margin-bottom: 5px;">Jurusan</div>
+            <div>
+                <?php
+                $jurusan = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM jurusan"))[0];
+                echo $jurusan." Jurusan";
+                ?>
+            </div>
+        </div>
+        <div
+            style="width: 200px; border: 1px solid #ccc; border-radius: 8px; padding: 10px; background: #17a2b8; color: white;">
+            <div style="font-weight: bold; margin-bottom: 5px;">Kategori</div>
+            <div>
+                <?php
+                $kategori = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM kategori"))[0];
+                echo $kategori." Kategori ➡️ ";
+                $kegiatan = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM kegiatan"))[0];
+                echo $kegiatan." Kegiatan";
+                ?>
+            </div>
+        </div>
+        <div
+            style="width: 200px; border: 1px solid #ccc; border-radius: 8px; padding: 10px; background: #28a745; color: white;">
+            <div style="font-weight: bold; margin-bottom: 5px;">Sertifikat</div>
+            <div>
+                <?php
+                $sertifikat = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM sertifikat"))[0];
+                echo $sertifikat." Sertifikat";
+                ?>
+            </div>
+        </div>
+    </div>
+    <?php
+    } elseif($_COOKIE['level_user']=='siswa'){
+        include "sertifikat_siswa.php";
+    }
+break;
     }
     ?>
 

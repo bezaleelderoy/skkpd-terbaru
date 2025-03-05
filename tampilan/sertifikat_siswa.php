@@ -71,7 +71,7 @@ function getSertifikat($koneksi, $status = '', $kegiatan = '') {
             echo $total_point . "/30 Point";
             
             if ($total_point >= 30) {
-                echo "<br><a href='#'>Cetak Sertifikat SKKPd</a>";
+                echo "<br><a href='../cetak/sertifikat_skkpd/generate_sertifikat.php'>Cetak Sertifikat SKKPd</a>";
             }
             ?>
             </td>

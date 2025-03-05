@@ -53,6 +53,14 @@ function getSertifikat($koneksi, $status = '', $kegiatan = '') {
         echo "<p>Tidak ada data</p>";
     }
 }
+
+
+if(@$_POST['tombol_cetak_laporan']){
+    setcookie('angkatan', $_POST['angkatan'], time() + (60 * 60 * 24 * 7), '/');
+    setcookie('status', $_POST['status'], time() + (60 * 60 * 24 * 7), '/');
+    echo "<script>window.location.href='../cetak/laporan/laporan.php';</script>";
+}
+
 ?>
 <center>
     <form method="POST" action="">
@@ -79,11 +87,71 @@ function getSertifikat($koneksi, $status = '', $kegiatan = '') {
     </form>
 </center>
 <br><br>
+<center>
+    <!-- <form method="POST" action="">
+        <input type="submit" value="Cetak Laporan">
+    </form> -->
+
+
+
+    <button type="button" onclick="document.getElementById('exampleModal').showModal();">
+        Cetak Laporan
+    </button>
+
+    <dialog id="exampleModal">
+        <form method="post">
+            <h2>Saring/Filter</h2>
+
+            <label for="angkatan">Pilih Angkatan:</label>
+            <select name="angkatan" id="angkatan">
+                <option hidden value="">Pilih Angkatan</option>
+                <option value="semua">Semua</option>
+                <?php
+            $data_angkatan = mysqli_query($koneksi, "SELECT Angkatan FROM siswa GROUP BY Angkatan");
+            while($angkatan = mysqli_fetch_assoc($data_angkatan)){
+            ?>
+                <option value="<?=$angkatan['Angkatan']?>"><?=$angkatan['Angkatan']?></option>
+                <?php
+            }
+            ?>
+            </select>
+
+            <label for="status">Pilih Status:</label>
+            <select name="status" id="status">
+                <option hidden value="">Pilih Status</option>
+                <option value="semua">Semua</option>
+                <?php
+            $data_status = mysqli_query($koneksi, "SELECT Status FROM sertifikat GROUP BY Status");
+            while($status = mysqli_fetch_assoc($data_status)){
+            ?>
+                <option value="<?=$status['Status']?>"><?=$status['Status']?></option>
+                <?php
+            }
+            ?>
+            </select>
+
+            <div style="margin-top: 10px;">
+                <button type="button" onclick="document.getElementById('exampleModal').close();">Batal</button>
+                <input type="submit" name="tombol_cetak_laporan" value="Cetak Laporan">
+            </div>
+        </form>
+    </dialog>
+</center>
+<br><br>
 
 <?php
 // Ambil nilai filter dari form
-$status = isset($_POST['status']) ? $_POST['status'] : '';
-$kegiatan = isset($_POST['kegiatan']) ? $_POST['kegiatan'] : '';
+if (isset($_POST['status'])) {
+    $status = $_POST['status'];
+} else {
+    $status = '';
+}
+
+if (isset($_POST['kegiatan'])) {
+    $kegiatan = $_POST['kegiatan'];
+} else {
+    $kegiatan = '';
+}
 
 // Tampilkan hasil pencarian
 getSertifikat($koneksi, $status, $kegiatan);
