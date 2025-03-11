@@ -56,8 +56,10 @@ function getSertifikat($koneksi, $status = '', $kegiatan = '') {
 
 
 if(@$_POST['tombol_cetak_laporan']){
-    setcookie('angkatan', $_POST['angkatan'], time() + (60 * 60 * 24 * 7), '/');
-    setcookie('status', $_POST['status'], time() + (60 * 60 * 24 * 7), '/');
+    $_SESSION['angkatan'] = $_POST['angkatan'];
+    $_SESSION['status'] = $_POST['status'];
+    // setcookie('angkatan', $_POST['angkatan'], time() + (60 * 60 * 24 * 7), '/');
+    // setcookie('status', $_POST['status'], time() + (60 * 60 * 24 * 7), '/');
     echo "<script>window.location.href='../cetak/laporan/laporan.php';</script>";
 }
 

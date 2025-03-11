@@ -1,13 +1,14 @@
 <?php
 include "../fpdf/fpdf.php";
 include "../../koneksi.php";
+session_start();
 
 // Buat objek PDF
 $pdf = new FPDF('P', 'mm', 'A4');
 $pdf->AddPage();
 
 // ===== HEADER (KOP SURAT) ===== //
-$pdf->Image('../../gambar/logoti.png', 10, 6, 20); // Logo
+// $pdf->Image('../../gambar/logoti.png', 10, 6, 20); // Logo
 $pdf->SetFont('Arial', 'B', 14);
 $pdf->Cell(190, 7, 'SMK TI Bali Global Denpasar', 0, 1, 'C');
 $pdf->SetFont('Arial', '', 12);
@@ -88,8 +89,8 @@ function tampilRekapKegiatan($pdf, $koneksi, $angkatan = NULL, $status = NULL) {
 }
 
 // ===== Panggil Fungsi Berdasarkan Filter User ===== //
-$angkatan = isset($_COOKIE['angkatan']) ? $_COOKIE['angkatan'] : 'semua';
-$status = isset($_COOKIE['status']) ? $_COOKIE['status'] : 'semua';
+$angkatan = isset($_SESSION['angkatan']) ? $_SESSION['angkatan'] : 'semua';
+$status = isset($_SESSION['status']) ? $_SESSION['status'] : 'semua';
 
 if ($angkatan == 'semua' && $status == 'semua') {
     $result_angkatan = mysqli_query($koneksi, "SELECT DISTINCT Angkatan FROM siswa ORDER BY Angkatan ASC");
