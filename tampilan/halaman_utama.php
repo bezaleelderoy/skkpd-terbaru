@@ -9,130 +9,57 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Utama</title>
-    <style>
-    .nav-menu,
-    .user-menu {
-        list-style: none;
-        display: flex
-    }
-
-    .nav-menu a,
-    .user-menu a {
-        text-decoration: none;
-        color: #fff;
-        transition: .3s
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box
-    }
-
-    body {
-        font-family: Arial, sans-serif
-    }
-
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #000;
-        color: #fff;
-        padding: 15px 50px;
-        position: sticky;
-        top: 0;
-        width: 100%;
-        z-index: 1000
-    }
-
-    .navbar h2 {
-        margin: 0;
-        font-size: 24px
-    }
-
-    .nav-menu {
-        gap: 20px
-    }
-
-    .nav-menu li,
-    .user-menu li {
-        display: inline
-    }
-
-    .nav-menu a {
-        font-size: 18px;
-        padding: 8px 12px;
-        border: 1px solid #fff
-    }
-
-    .nav-menu a:hover,
-    .user-menu a:hover {
-        background: #555;
-        border-radius: 5px
-    }
-
-    .user-menu {
-        gap: 10px
-    }
-
-    .user-menu a {
-        font-size: 16px;
-        padding: 5px 10px;
-        border: 1px solid #fff
-    }
-
-    .logout a {
-        color: red
-    }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
 <body>
 
     <!-- Navbar -->
-    <div class="navbar">
-        <h2>SKKPd</h2>
-        <nav>
-            <ul class="nav-menu">
+    <!-- Navbar -->
+    <div class="navbar bg-accent shadow-sm">
+        <div class="flex-1">
+            <a class="btn btn-ghost text-xl text-white font-bold">daisyUI</a>
+        </div>
+        <div class="flex-none">
+            <ul class="menu menu-horizontal px-1">
                 <?php
                 if ($_COOKIE['level_user'] == 'operator') {
                 ?>
-                <li><a href="halaman_utama.php">Halaman Utama</a></li>
-                <li><a href="halaman_utama.php?page=siswa">Siswa</a></li>
-                <li><a href="halaman_utama.php?page=jurusan">Jurusan</a></li>
-                <li><a href="halaman_utama.php?page=kategori_kegiatan">Kategori</a></li>
-                <li><a href="halaman_utama.php?page=sertifikat">Sertifikat</a></li>
+                    <li><a class="text-white font-bold" href="halaman_utama.php">Halaman Utama</a></li>
+                    <li><a class="text-white font-bold" href="halaman_utama.php?page=siswa">Siswa</a></li>
+                    <li><a class="text-white font-bold" href="halaman_utama.php?page=jurusan">Jurusan</a></li>
+                    <li><a class="text-white font-bold" href="halaman_utama.php?page=kategori_kegiatan">Kategori</a></li>
+                    <li><a class="text-white font-bold" href="halaman_utama.php?page=sertifikat">Sertifikat</a></li>
                 <?php
                 } elseif ($_COOKIE['level_user'] == 'siswa') {
                 ?>
-                <li><a href="halaman_utama.php?page=sertifikat_siswa">Sertifikat</a></li>
+                    <li><a class="text-white font-bold" href="halaman_utama.php?page=sertifikat_siswa">Sertifikat</a></li>
                 <?php
                 }
                 ?>
-            </ul>
-        </nav>
-        <div>
-            <span><?=$_COOKIE['nama_lengkap']?></span>
-            <ul class="user-menu">
-                <?php
-                if ($_COOKIE['level_user'] == 'operator') {
-                ?>
-                <li><a href="halaman_utama.php?page=ubah_pegawai&username=<?=$_COOKIE['username']?>">Edit Profil</a>
+                <li>
+                    <details>
+                        <summary class="text-white font-bold"><?= $_COOKIE['nama_lengkap'] ?></summary>
+                        <ul class="bg-accent rounded-t-none p-2">
+                            <?php if ($_COOKIE['level_user'] == 'operator') { ?>
+                                <li>
+                                    <a class="text-white font-bold" href="halaman_utama.php?page=ubah_pegawai&username=<?= $_COOKIE['username'] ?>">Edit Profil</a>
+                                </li>
+                            <?php } else { ?>
+                                <li>
+                                    <a class="text-white font-bold" href="halaman_utama.php?page=ubah_pass">Ganti Password</a>
+                                </li>
+                            <?php } ?>
+                            <li>
+                                <a class="text-white font-bold" href="../logout.php">Logout</a>
+                            </li>
+                        </ul>
+                    </details>
                 </li>
-                <?php
-                } else {
-                ?>
-                <li><a href="halaman_utama.php?page=ubah_pass">Ganti Password</a></li>
-                <?php
-                }
-                ?>
-                <li class="logout"><a href="../logout.php">Logout</a></li>
             </ul>
         </div>
     </div>
-    <br><br>
-    <!-- Navbar -->
 
     <?php
     switch (@$_GET['page']) {
@@ -174,74 +101,80 @@ session_start();
             break;
         case "upload_sertifikat":
             include "../tambah/upload_sertifikat.php";
-        break;
+            break;
         case "sertifikat_siswa":
             include "sertifikat_siswa.php";
-        break;
+            break;
         case "sertifikat":
             include "sertifikat.php";
-        break;
+            break;
         case "cek_sertifikat":
             include "cek_sertifikat.php";
-        break;
+            break;
         case "cek_sertifikat_siswa":
             include "cek_sertifikat_siswa.php";
-        break;
+            break;
 
 
         default:
-    if($_COOKIE['level_user']=='operator'){
-?>
-    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; justify-content: center;">
-        <div style="width: 200px; border: 1px solid #ccc; border-radius: 8px; padding: 10px; background: #f8f9fa;">
-            <div style="font-weight: bold; margin-bottom: 5px;">Siswa</div>
-            <div>
-                <?php
-                $siswa = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM siswa"))[0];
-                echo $siswa." Siswa";
-                ?>
-            </div>
-        </div>
-        <div style="width: 200px; border: 1px solid #ccc; border-radius: 8px; padding: 10px; background: #ffc107;">
-            <div style="font-weight: bold; margin-bottom: 5px;">Jurusan</div>
-            <div>
-                <?php
-                $jurusan = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM jurusan"))[0];
-                echo $jurusan." Jurusan";
-                ?>
-            </div>
-        </div>
-        <div
-            style="width: 200px; border: 1px solid #ccc; border-radius: 8px; padding: 10px; background: #17a2b8; color: white;">
-            <div style="font-weight: bold; margin-bottom: 5px;">Kategori</div>
-            <div>
-                <?php
-                $kategori = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM kategori"))[0];
-                echo $kategori." Kategori ➡️ ";
-                $kegiatan = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM kegiatan"))[0];
-                echo $kegiatan." Kegiatan";
-                ?>
-            </div>
-        </div>
-        <div
-            style="width: 200px; border: 1px solid #ccc; border-radius: 8px; padding: 10px; background: #28a745; color: white;">
-            <div style="font-weight: bold; margin-bottom: 5px;">Sertifikat</div>
-            <div>
-                <?php
-                $sertifikat = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM sertifikat"))[0];
-                echo $sertifikat." Sertifikat";
-                ?>
-            </div>
-        </div>
-    </div>
+            if ($_COOKIE['level_user'] == 'operator') {
+    ?>
+                <div class="flex flex-wrap gap-4 mt-5 justify-center">
+                    <!-- Siswa Card -->
+                    <div class="card w-52 bg-white shadow-md p-4">
+                        <div class="text-lg font-bold text-gray-700 border-b-4 border-accent pb-1">Siswa</div>
+                        <div class="text-xl font-semibold text-gray-900 mt-2">
+                            <?php
+                            $siswa = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM siswa"))[0];
+                            echo $siswa . " Siswa";
+                            ?>
+                        </div>
+                    </div>
+
+                    <!-- Jurusan Card -->
+                    <div class="card w-52 bg-white shadow-md p-4">
+                        <div class="text-lg font-bold text-gray-700 border-b-4 border-accent pb-1">Jurusan</div>
+                        <div class="text-xl font-semibold text-gray-900 mt-2">
+                            <?php
+                            $jurusan = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM jurusan"))[0];
+                            echo $jurusan . " Jurusan";
+                            ?>
+                        </div>
+                    </div>
+
+                    <!-- Kategori & Kegiatan Card -->
+                    <div class="card w-52 bg-white shadow-md p-4">
+                        <div class="text-lg font-bold text-gray-700 border-b-4 border-accent pb-1">Kategori</div>
+                        <div class="text-xl font-semibold text-gray-900 mt-2">
+                            <?php
+                            $kategori = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM kategori"))[0];
+                            echo $kategori . " Kategori ➡️ ";
+                            $kegiatan = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM kegiatan"))[0];
+                            echo $kegiatan . " Kegiatan";
+                            ?>
+                        </div>
+                    </div>
+
+                    <!-- Sertifikat Card -->
+                    <div class="card w-52 bg-white shadow-md p-4">
+                        <div class="text-lg font-bold text-gray-700 border-b-4 border-accent pb-1">Sertifikat</div>
+                        <div class="text-xl font-semibold text-gray-900 mt-2">
+                            <?php
+                            $sertifikat = mysqli_fetch_row(mysqli_query($koneksi, "SELECT COUNT(*) FROM sertifikat"))[0];
+                            echo $sertifikat . " Sertifikat";
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
+
     <?php
-    } elseif($_COOKIE['level_user']=='siswa'){
-        include "sertifikat_siswa.php";
-    }
-break;
+            } elseif ($_COOKIE['level_user'] == 'siswa') {
+                include "sertifikat_siswa.php";
+            }
+            break;
     }
     ?>
-
 </body>
 
 </html>
