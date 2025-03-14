@@ -19,7 +19,7 @@ session_start();
     <!-- Navbar -->
     <div class="navbar bg-accent shadow-sm">
         <div class="flex-1">
-            <a class="btn btn-ghost text-xl text-white font-bold">daisyUI</a>
+            <a class="btn btn-ghost text-xl text-white font-bold">SKKPd</a>
         </div>
         <div class="flex-none">
             <ul class="menu menu-horizontal px-1">
