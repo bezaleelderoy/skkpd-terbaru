@@ -24,7 +24,10 @@ if(isset($_POST['tombol_tambah'])){
     
 }
 ?>
-<center>
+<div class="px-28 pb-12">
+    <div class="flex justify-between items-center my-5">
+        <h1 class="text-3xl font-bold border-b-2 border-accent pb-1">Tambah Siswa</h1>
+    </div>
     <form action="" method="post">
         <table align="center" cellspacing="10">
             <tr>
@@ -79,4 +82,4 @@ if(isset($_POST['tombol_tambah'])){
             </tr>
         </table>
     </form>
-</center>
+</div>
