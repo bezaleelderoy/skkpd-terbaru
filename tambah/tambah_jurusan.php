@@ -21,18 +21,19 @@ if (isset($_POST['tombol_tambah'])) {
     }
 }
 ?>
-<center>
+<div class="px-28 pb-12">
+    <div class="flex justify-between items-center my-5">
+        <h1 class="text-3xl font-bold border-b-2 border-accent pb-1">Tambah Jurusan</h1>
+    </div>
+
     <form action="" method="post">
-        <table cellspacing="10">
-            <tr>
-                <td><label for="jurusan">Nama Jurusan</label></td>
-                <td><input type="text" id="jurusan" name="jurusan" required></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="submit" name="tombol_tambah" style="float:right" value="Simpan">
-                </td>
-            </tr>
-        </table>
+        <div class="form-control w-full">
+            <label class="label"><span class="label-text">Nama Jurusan</span></label>
+            <input type="text" id="jurusan" name="jurusan" class="input input-bordered w-full" required>
+        </div>
+
+        <div class="flex justify-end mt-6">
+            <input type="submit" name="tombol_tambah" value="Simpan" class="btn btn-primary">
+        </div>
     </form>
-</center>
+</div>

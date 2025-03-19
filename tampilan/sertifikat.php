@@ -1,10 +1,12 @@
 <?php
+
 if (!@$_COOKIE['level_user']) {
-    echo "<script>alert('belum login');window.location.href='../login.php'</script>";
+    echo "<script>alert('Belum login');window.location.href='../login.php'</script>";
 } elseif ($_COOKIE['level_user'] == 'siswa') {
-    echo "<script>alert('anda siswa, silahkan kembali');window.location.href='halaman_utama.php?page=sertifikat_siswa'</script>";
+    echo "<script>alert('Anda siswa, silahkan kembali');window.location.href='halaman_utama.php?page=sertifikat_siswa'</script>";
 }
-// Fungsi untuk mendapatkan data sertifikat berdasarkan status dan kegiatan
+
+// Fungsi untuk mendapatkan data sertifikat berdasarkan filter
 function getSertifikat($koneksi, $status = '', $kegiatan = '')
 {
     $whereClause = "WHERE 1"; // Default kondisi WHERE
@@ -24,46 +26,63 @@ function getSertifikat($koneksi, $status = '', $kegiatan = '')
 
     $result = mysqli_query($koneksi, $query);
 
+    echo "<div class='px-28 pb-12'>";
+    echo "<div class='flex justify-between items-center my-5'>";
+    echo "<h1 class='text-3xl font-bold border-b-2 border-accent pb-1'>Data Sertifikat</h1>";
+
+    // Form Cetak Laporan
+    echo "<form method='POST' action='' class='flex items-center space-x-2'>";
+    echo "<select class='select' name='angkatan'>";
+    echo "<option value=''>Pilih Angkatan</option>";
+    $list_angkatan = mysqli_query($koneksi, "SELECT DISTINCT Angkatan FROM siswa");
+    while ($data_angkatan = mysqli_fetch_assoc($list_angkatan)) {
+        echo "<option value='{$data_angkatan['Angkatan']}'>{$data_angkatan['Angkatan']}</option>";
+    }
+    echo "</select>";
+
+    echo "<input type='hidden' name='status' value='$status'>";
+    echo "<button type='submit' name='tombol_cetak_laporan' class='btn btn-secondary'>🖨 Cetak Laporan</button>";
+    echo "</form>";
+    echo "</div>";
+
+    // Form Filter Data Sertifikat
+    echo "<form method='POST' action='' class='mb-5 flex items-center space-x-4'>";
+    echo "<label class='me-2' for='status'>Pilih Status:</label>";
+    echo "<select class='select mx-2' name='status'>";
+    echo "<option value=''>Semua</option>";
+    echo "<option value='Menunggu Validasi'>Menunggu Validasi</option>";
+    echo "<option value='Tidak Valid'>Tidak Valid</option>";
+    echo "<option value='Valid'>Sudah Tervalidasi</option>";
+    echo "</select>";
+
+    echo "<label for='kegiatan'>Pilih Kegiatan:</label>";
+    echo "<select class='select mx-2' name='kegiatan'>";
+    echo "<option value=''>Semua</option>";
+    $list_kegiatan = mysqli_query($koneksi, "SELECT DISTINCT Jenis_Kegiatan FROM kegiatan");
+    while ($data_kegiatan = mysqli_fetch_assoc($list_kegiatan)) {
+        echo "<option value='{$data_kegiatan['Jenis_Kegiatan']}'>{$data_kegiatan['Jenis_Kegiatan']}</option>";
+    }
+    echo "</select>";
+
+    echo "<input class='btn btn-success' type='submit' value='Cari'>";
+    echo "</form>";
+
+    // Tabel Data Sertifikat
+    echo "<div class='overflow-x-auto rounded-box border border-gray-200 bg-base-100'>";
+    echo "<table class='table w-full'>";
+    echo "<thead><tr>
+            <th>NIS</th>
+            <th>Kategori</th>
+            <th>Sub Kategori</th>
+            <th>Jenis Kegiatan</th>
+            <th>Nama Siswa</th>
+            <th>Angkatan</th>
+            <th>Status</th>
+            <th>Lihat Sertifikat</th>
+          </tr></thead>";
+    echo "<tbody>";
+
     if (mysqli_num_rows($result) > 0) {
-        echo "<div class='px-28 pb-12'>";
-        echo "<div class='flex justify-between items-center my-5'>
-        <h1 class='text-3xl font-bold border-b-2 border-accent pb-1'>Data Sertifikat</h1>
-        </div>";
-
-        // Filter form under Data Sertifikat
-        echo "<form method='POST' action='' class='mb-5'>";
-        echo "<label class='me-2' for='status'>Pilih Status</label>";
-        echo "<select class='select mx-2' name='status'>";
-        echo "<option value=''>Semua</option>";
-        echo "<option value='Menunggu Validasi'>Menunggu Validasi</option>";
-        echo "<option value='Tidak Valid'>Tidak Valid</option>";
-        echo "<option value='Valid'>Sudah Tervalidasi</option>";
-        echo "</select>";
-
-        echo "<label for='kegiatan'>Pilih Kegiatan</label>";
-        echo "<select class='select mx-2' name='kegiatan'>";
-        echo "<option value=''>Semua</option>";
-        $list_kegiatan = mysqli_query($koneksi, "SELECT DISTINCT Jenis_Kegiatan FROM kegiatan");
-        while ($data_kegiatan = mysqli_fetch_assoc($list_kegiatan)) {
-            echo "<option value='{$data_kegiatan['Jenis_Kegiatan']}'>{$data_kegiatan['Jenis_Kegiatan']}</option>";
-        }
-        echo "</select>";
-        echo "<input class='btn btn-soft btn-success' type='submit' value='Cari'>";
-        echo "</form>";
-
-        echo "<div class='overflow-x-auto rounded-box border border-gray-200 border-base-content/3 bg-base-100'>";
-        echo "<table class='table'>";
-        echo "<tr>
-                <th>NIS</th>
-                <th>Kategori</th>
-                <th>Sub Kategori</th>
-                <th>Jenis Kegiatan</th>
-                <th>Nama Siswa</th>
-                <th>Angkatan</th>
-                <th>Status</th>
-                <th>Lihat Sertifikat</th>
-              </tr>";
-
         while ($data = mysqli_fetch_assoc($result)) {
             echo "<tr>
                     <td>{$data['NIS']}</td>
@@ -76,18 +95,26 @@ function getSertifikat($koneksi, $status = '', $kegiatan = '')
                     <td><a class='link link-accent' href='halaman_utama.php?page=cek_sertifikat&id={$data['Id_Sertifikat']}&file={$data['Sertifikat']}' target='_blank'>Lihat File</a></td>
                   </tr>";
         }
-        echo "</table>";
-        echo "</div>";
-        echo "</div>";
     } else {
-        echo "<p>Tidak ada data</p>";
+        echo "<tr><td colspan='8' class='text-center py-4'>Tidak ada data</td></tr>";
     }
+
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>";
+    echo "</div>";
 }
 
-if (@$_POST['tombol_cetak_laporan']) {
-    $_SESSION['angkatan'] = $_POST['angkatan'];
-    $_SESSION['status'] = $_POST['status'];
-    echo "<script>window.location.href='../cetak/laporan/laporan.php';</script>";
+// Cek jika tombol cetak laporan ditekan
+if (isset($_POST['tombol_cetak_laporan'])) {
+    if (!empty($_POST['angkatan'])) {
+        $_SESSION['angkatan'] = $_POST['angkatan'];
+        $_SESSION['status'] = isset($_POST['status']) ? $_POST['status'] : '';
+        echo "<script>window.location.href='../cetak/laporan/laporan.php';</script>";
+        exit(); // Pastikan tidak ada eksekusi lebih lanjut
+    } else {
+        echo "<script>alert('Pilih angkatan terlebih dahulu!');</script>";
+    }
 }
 
 // Ambil nilai filter dari form
