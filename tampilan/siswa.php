@@ -19,15 +19,15 @@ if (isset($_GET['nis'])) {
     }
 }
 ?>
-<div class="px-28 pb-12">
-    <div class="flex justify-between items-center my-5">
-        <h1 class="text-3xl font-bold border-b-2 border-accent pb-1">Data Siswa</h1>
-        <button class="btn btn-soft btn-success" onclick="window.location.href='halaman_utama.php?page=tambah_siswa';">
+<div class="px-4 sm:px-10 md:px-20 lg:px-28 pb-12">
+    <div class="flex flex-col sm:flex-row justify-between items-center my-5 gap-4">
+        <h1 class="text-2xl sm:text-3xl font-bold border-b-2 border-accent pb-1">Data Siswa</h1>
+        <button class="btn btn-soft btn-success w-full sm:w-auto" onclick="window.location.href='halaman_utama.php?page=tambah_siswa';">
             Tambah Siswa
         </button>
     </div>
     <div class="overflow-x-auto rounded-box border border-gray-200 border-base-content/3 bg-base-100">
-        <table class="table">
+        <table class="table w-full text-sm sm:text-base">
             <!-- head -->
             <thead>
                 <tr>
@@ -56,15 +56,14 @@ if (isset($_GET['nis'])) {
                         <td><?= $data['Angkatan'] ?></td>
                         <td><?= $data['Email'] ?></td>
                         <td><?= $data['No_Telp'] ?></td>
-                        <td>
-                            <a href="halaman_utama.php?page=ubah_siswa&nis=<?= $data['NIS'] ?>" class="btn btn-soft btn-warning">Edit</a>
-                            <a href="halaman_utama.php?page=siswa&nis=<?= $data['NIS'] ?>" onclick="return confirm('Yakin mau hapus?');" class="btn btn-soft btn-error">Hapus</a>
+                        <td class="flex flex-wrap gap-2">
+                            <a href="halaman_utama.php?page=ubah_siswa&nis=<?= $data['NIS'] ?>" class="btn btn-soft btn-warning text-xs sm:text-sm">Edit</a>
+                            <a href="halaman_utama.php?page=siswa&nis=<?= $data['NIS'] ?>" onclick="return confirm('Yakin mau hapus?');" class="btn btn-soft btn-error text-xs sm:text-sm">Hapus</a>
                         </td>
                     </tr>
                 <?php
                 }
                 ?>
-
             </tbody>
         </table>
     </div>
